@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1/auth", require("./router/auth.router"));
+app.use("/api/v1/otp", require("./router/otp.router"));
 
 app.listen(PORT, () => {
     console.log(`server is successfully running on port ${PORT}`)

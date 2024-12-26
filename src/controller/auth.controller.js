@@ -8,11 +8,11 @@ const login = async(req, res) => {
         if(email && password) {
             const signedInUser = await Users.findOne({email});
             if(!signedInUser) {
-                return res.status(400).json({code:400, message: "Email id doesn't exist." })
+                return res.status(400).json({code:400, message: "Email id doesn't exist" })
             }
             const passwordMatched = await bcrypt.compare(password, signedInUser.password);
             if(!passwordMatched) {
-                return res.status(400).json({code:400, message: "Password is incorrect." })
+                return res.status(400).json({code:400, message: "Password is incorrect" })
             }
             const user = {
                 username: signedInUser.username,
@@ -21,11 +21,11 @@ const login = async(req, res) => {
                 role: signedInUser.role
             }
             const token = await jwt.sign(user,process.env.SECRET_KEY,{expiresIn:'30m'});
-            return res.status(200).json({code:200, message: 'Successfully logged in.',token:token})  
+            return res.status(200).json({code:200, message: 'Successfully logged in',token:token})  
         } else if(!email && !password) {
-           return res.status(400).json({code:400, message:'Email id and password are required.'})
+           return res.status(400).json({code:400, message:'Email id and password are required'})
         } else if (!email || !password) {
-            return res.status(400).json({code:400, message: !email ? 'Email id is missing.' : 'Password is missing.'})
+            return res.status(400).json({code:400, message: !email ? 'Email id is missing' : 'Password is missing'})
         }
     } catch(err) {
         return res.status(400).json({code:400, message:err.message})
